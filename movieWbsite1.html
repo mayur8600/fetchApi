@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:aliceblue;
+        }
+        img {
+            width: 300px;
+        }
+
+        header {
+            width: 100%;
+        }
+
+        .container {
+            margin: auto;
+            /* border: 1px solid; */
+        }
+
+        input {
+            background: none;
+            width: 280px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid black;
+            outline: none;
+            padding: 5px;
+            padding-left: 20px;
+        }
+        input::placeholder{
+            text-align: center;
+        }
+
+        #movie{
+            width: 20%;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+        button{
+            width: 307px;
+            height:25px;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid black;
+            margin-top: 10px;
+            background-color: red;
+            color: white;
+            font-weight: 600;
+        }
+
+        #tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        #tooltip #tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            top: -100px;
+            left: 179px;
+            /* right: 200px;; */
+        }
+
+        #tooltip #tooltiptext {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <input type="text" id="mName" placeholder="Enter Movie Name"><br>
+            <button onclick="getMovie()">Search</button>
+            <div id="movie"></div>
+
+            <div id="tooltip"><span id="tooltiptext">Recommended</span>
+            </div>
+        </div>
+    </header>
+</body>
+
+</html>
+<script>
+    async function getMovie() {
+        var div_data = document.getElementById("movie");
+        var mName = document.getElementById('mName').value
+        let res = await fetch(`http://www.omdbapi.com/?t=${mName}&apikey=692fa8fc`);
+        let data = await res.json();
+        console.log(data)
+        var k = `<img src="${data.Poster}" alt="img"><br>Title: ${data.Title}<br>Year: ${data.Year}<br>Rated: ${data.imdbRating}<br>Realesed: ${data.Released}<br>Runtime: ${data.Runtime}`
+        var img1 = data.Poster;
+        // console.log(k)
+        if (data.Title != undefined) {
+            div_data.innerHTML = k;
+            if (data.imdbRating > 8.5) {
+                var h = document.getElementById('tooltiptext');
+                h.style.visibility = "visible";
+
+            }
+        } else {
+            var img = document.createElement('img');
+            img.src = 'https://freefrontend.com/assets/img/html-funny-404-pages/HTML-Beer-404-Page.gif';
+            div_data.append(img)
+        }
+    }
+</script>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    async function makeRequest(){
+        try{
+        let responce = await fetch('https://reqres.in/api/users?page=2')
+        let data = await responce.json();
+        console.log(data)
+    }
+    catch(e){
+        console.log(e)
+    }
+    }
+    makeRequest();
+</script>

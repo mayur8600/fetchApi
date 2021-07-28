@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="mName">
+    <button onclick="getMovie()">Search</button>
+    <div id="movie"></div>
+</body>
+</html>
+<script>
+    // api.openweathermap.org/data/2.5/weather?q={city name}&appid=4d82207b3d01585cb177e5b4b039d2e5
+    async function getMovie(){
+        var div_data = document.getElementById("movie");
+        var mName = document.getElementById('mName').value
+        let res = await fetch(`http://www.omdbapi.com/?t=${mName}&apikey=692fa8fc`);
+        let data = await res.json();
+        // var m_p = document.createElement('p');
+        // m_p.innerHTML = 
+        var k = `Title: ${data.Title}<br>Year: ${data.Year}<br>Rated: ${data.Rated}<br>Realesed: ${data.Released}<br>Runtime: ${data.Runtime}`
+        div_data.innerHTML = k;
+        // console.log(k)
+    }
+</script>
