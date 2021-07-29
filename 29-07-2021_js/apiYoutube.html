@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- https://youtube.googleapis.com/youtube/v3/search?key=[YOUR_API_KEY] -->
+    <input type="text" id="query">
+    <button onclick="findVideos()">Search</button>
+    <div id="videos"></div>
+</body>
+</html>
+<script>
+    let videos_div = document.getElementById('videos');
+    async function findVideos(){
+        videos_div.innerHTML = null; 
+        let q = document.getElementById('query').value
+
+        let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${q}&key=AIzaSyCW0RDkMXE3rC2A4_Dz4_QQuvXyaWMY3no`);
+
+        let data = await res.json();
+
+       
+
+        let {items}= data;
+
+        items = items.filter((el)=>{ return el.id.videoId != undefined;})
+
+        items.forEach(({id:{videoId}})=>{
+            let div = document.createElement('div');
+            div.innerHTML =`<iframe width="876" height="372" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+
+            videos_div.appendChild(div)
+        });
+    }
+</script>
